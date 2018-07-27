@@ -52,8 +52,20 @@ Enemy.prototype.checkCollision = function() {
 		player.x = 202;
 		player.y = 405;
 		playerCollide += 1;
-		updateDisplay();
-	}	
+		
+	}
+	//this is to count the numbers of times that the player had collision with the bugs
+	if(playerCollide === 5)	{
+		//in this case, if the collisiongets to 5, then the game is over and the time is reported on the mdal panel
+		gameOver();
+		clearTimeout(t);
+		finalTime = timer.innerHTML;// This stores the final time
+		modalloss.classList.add("show"); // the dialog box shows up
+		scoreDiv.innerHTML = 'Your score is: '+ score + ' You were hit :' + playerCollide +' times';
+		document.getElementById("totalTime").innerHTML = finalTime;
+		closePrompt();
+	}
+	updateDisplay();
 };
 
 
@@ -93,7 +105,7 @@ Player.prototype.handleInput = function(keyPress){
 			player.y = 405;
 			
 		}, 600);
-		gameOver();	
+		gameOver();
 		
 	}
 	startTimer();		
@@ -117,7 +129,8 @@ var allEnemies = [];
 // Place the player object in a variable called player
 var player = new Player(202, 405);
 
-
+//This section listen to the input keyboard up and down arrow
+/* *****************************************************************************/
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -130,33 +143,15 @@ document.addEventListener('keyup', function(e) {
     };
 	player.handleInput(allowedKeys[e.keyCode]);
 });
-
+//This section reste the player to the initial position -x and -y coordinates and then determines when the games ends
+//The game ends when the score achieve 10 croses
+/* *****************************************************************************/
 Player.prototype.reset = function() {
     this.x = 202;
     this.y = 405;
 	score += 1;	
-};
-
-
-/*
- * resets the game in case of collision: I should use modal dialog box here to communicate the message
- */
-
-
-/*
- * game over successfully (reached water)
- */
-
-
-function gameOver(){
-	seconds = 0; //when the player get to the river, after thee game is over, Everything here goes back to zero
-    minutes = 0; 
-	hours = 0;
-    player.reset();
-    updateDisplay();
-	enemy.checkCollision();
-	
 	if(score === 10){
+			gameOver();
 		clearTimeout(t);
 		finalTime = timer.innerHTML;
 		modal.classList.add("show");
@@ -164,14 +159,19 @@ function gameOver(){
 		document.getElementById("totalTime").innerHTML = finalTime;
 		closePrompt();
 	}
-	else if(playerCollide === 5){
-		clearTimeout(t);
-		finalTime = timer.innerHTML;
-		modalloss.classList.add("show");
-		scoreDiv.innerHTML = 'Your score is: '+ score + ' You were hit :' + playerCollide +' times';
-		document.getElementById("totalTime").innerHTML = finalTime;
-		closePrompt();
-	}
+};
+
+
+
+//This section is calling different parts that makes up the gameover determinations
+/* *****************************************************************************/
+
+function gameOver(){
+	seconds = 0; //when the player get to the river, after thee game is over, Everything here goes back to zero
+    minutes = 0; 
+	hours = 0;
+    player.reset();
+    updateDisplay();
 }
 
 
@@ -181,9 +181,8 @@ function gameOver(){
 function updateDisplay() {
     scoreDiv.innerHTML = 'Your score is: '+ score + ' You were hit :' + playerCollide +' times';
 }
-/*
-This section orgaize the reset card in a logical manner
-*/
+//This section is for the restart button icon at the top of the game board
+/* *****************************************************************************/
 let restart = document.querySelector('.restart');
 function resetCard (){
 	restart.addEventListener('click', function() {
@@ -196,12 +195,11 @@ function resetCard (){
 	});
 }
 
-/*
-This section is the time counter
-*/
+//This section is the time counter fuctionality
+/* *****************************************************************************/
 var t //Global variable for time
 // I got this code from https://jsfiddle.net/Daniel_Hug/pvk6p/. 
-//I want the time to stoop when the game is reset but I couldn't get it
+//I want the time to stoop when the game is reset but I couldn't get it done: it smiply wouldn't stop
 
 function add() {
     seconds++;
@@ -225,7 +223,8 @@ function startTimer() {
     t = setTimeout(add, 1000);
 }
 
-
+//This section is for the dialog box functionality
+/* *****************************************************************************/
 function closePrompt(){
 	closeicon.addEventListener("click", function(){
 		resetCard ();
@@ -233,7 +232,7 @@ function closePrompt(){
 		modalloss.classList.remove("show");
     });
 }
-
+// ths is the fuction where the replaybuttn on the modal dialog box is called
 function playAgain(){
 	resetCard();
 	score = 0; // when reste is selceted, the score board goes back to zero
