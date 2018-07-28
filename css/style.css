@@ -19,13 +19,13 @@ body {
 }
 h2{
 	color: Blue;
-	font-size=500%;
+	font-size:300%;
 	
 }
 h4{
 	
 	font-style: italic;
-	font-size = 50%;
+	font-size :150%;
 }
 .restart {
 	float:center;

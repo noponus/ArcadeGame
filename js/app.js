@@ -6,11 +6,11 @@ var minutes = 0;
 var hours = 0;
 let timer = document.querySelector(".clock");
 //This is the close icon handler
- let closeicon = document.querySelector(".close");
+let closeicon = document.querySelector(".close");
 //This is the modal handler
- let modal = document.getElementById("popup1")
+let modal = document.getElementById("popup1")
 
- let modalloss = document.getElementById("popdown")
+ let modalloss = document.getElementById("popdown");
 //let interval;
 
 
@@ -84,6 +84,7 @@ Player.prototype.update = function(dt) {
 Player.prototype.render = function() {
  ctx.drawImage(Resources.get(this.player), this.x, this.y);
 };
+
 var score = 0;
 Player.prototype.handleInput = function(keyPress){
 	
@@ -117,17 +118,19 @@ Player.prototype.handleInput = function(keyPress){
 var scoreDiv = document.createElement('div');
 var canvasDiv = document.getElementsByTagName('canvas')[0];
 document.body.insertBefore(scoreDiv, canvasDiv);
-
-
 var allEnemies = [];
+// Place the player object in a variable called player
+var player = new Player(202, 405);
+let restart = document.querySelector('.restart');
+
+
 [63, 147, 230].forEach(function(locationY){
 	enemy = new Enemy(0, locationY, 200);
 	allEnemies.push(enemy);
-	});
+});
 
 
-// Place the player object in a variable called player
-var player = new Player(202, 405);
+
 
 //This section listen to the input keyboard up and down arrow
 /* *****************************************************************************/
@@ -143,6 +146,7 @@ document.addEventListener('keyup', function(e) {
     };
 	player.handleInput(allowedKeys[e.keyCode]);
 });
+
 //This section reste the player to the initial position -x and -y coordinates and then determines when the games ends
 //The game ends when the score achieve 10 croses
 /* *****************************************************************************/
@@ -151,7 +155,7 @@ Player.prototype.reset = function() {
     this.y = 405;
 	score += 1;	
 	if(score === 10){
-			gameOver();
+		gameOver();
 		clearTimeout(t);
 		finalTime = timer.innerHTML;
 		modal.classList.add("show");
@@ -183,7 +187,7 @@ function updateDisplay() {
 }
 //This section is for the restart button icon at the top of the game board
 /* *****************************************************************************/
-let restart = document.querySelector('.restart');
+
 function resetCard (){
 	restart.addEventListener('click', function() {
 	score = 0; // when reste is selceted, the score board goes back to zero
@@ -191,7 +195,6 @@ function resetCard (){
 	clearTimeout(t); // The clock is paused 
 	seconds = 0; minutes = 0; hours = 0; //clock set back to zero
 	scoreDiv.innerHTML = 'Your score is: '+ 0 + ' You were hit :' + 0 +' times';
-	
 	});
 }
 
@@ -215,8 +218,7 @@ function add() {
    timer.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + 
    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + 
    (seconds > 9 ? seconds : "0" + seconds);
-
-    startTimer();
+   startTimer();
 }
 
 function startTimer() {

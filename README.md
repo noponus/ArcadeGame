@@ -25,6 +25,13 @@ Game Displays below stats and views
 Requirements
 An internet browser and a mechanism to click each card (mouse, trackpad, touchscreen) are required.
 
+How to Run
+
+First Method
+Download the repository on Github
+Unzip the files.
+Open the "index.html" in your browser to play the game.
+
 Contributing
 This repository contains a combination of starter code (HTML, CSS, and JavaScript) from Udacity. I reveiwed several vedios and codes written by my colleague before starting to develop my game.
 I also consulted with my colleague on the Slack group: fend, fend_proj_2 and fend_live_help. 
